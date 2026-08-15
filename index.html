@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voy Avanzando · apps para avanzar sin prisa</title>
+<meta name="description" content="Apps chiquitas que te ayudan a avanzar, sin fechas límite y sin culpa. La primera: El Empujoncito.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF9F4; --ink:#4A3F3C; --soft:#7A6C68; --card:#FFFFFF;
+    --coral:#F4562A; --peach-a:#FFDCC9; --peach-b:#FFEDDE;
+  }
+  *{margin:0; padding:0; box-sizing:border-box}
+  body{
+    font-family:'Quicksand',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--peach-a) 0,var(--peach-b) 320px,var(--bg) 560px) no-repeat,var(--bg);
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  main{flex:1; width:100%; max-width:720px; margin:0 auto; padding:56px 20px 40px; text-align:center}
+  h1{font-family:'Baloo 2',Quicksand,system-ui,sans-serif; font-weight:800; font-size:44px; line-height:1.05}
+  .lema{margin-top:12px; font-size:18px; color:var(--soft); font-weight:500}
+  .apps{margin-top:44px; text-align:left}
+  .app-card{
+    display:block; background:var(--card); border-radius:22px; padding:26px 24px;
+    text-decoration:none; color:var(--ink);
+    box-shadow:0 6px 24px rgba(74,63,60,.10);
+  }
+  .app-card h2{font-family:'Baloo 2',Quicksand,sans-serif; font-weight:800; font-size:26px}
+  .app-card p{margin-top:8px; color:var(--soft); font-size:16px; line-height:1.5}
+  .app-card .ir{
+    display:inline-block; margin-top:16px; background:var(--coral); color:#fff;
+    font-weight:700; font-size:15px; border-radius:999px; padding:10px 22px;
+  }
+  .pronto{margin-top:18px; font-size:14px; color:var(--soft); text-align:center}
+  footer{padding:26px 20px; text-align:center; font-size:14px; color:var(--soft)}
+  footer a{color:var(--soft)}
+  @media (max-width:480px){ h1{font-size:34px} }
+</style>
+</head>
+<body>
+<main>
+  <h1>Voy Avanzando</h1>
+  <p class="lema">Apps chiquitas para avanzar de verdad. Sin fechas límite, sin culpa, sin prisa.</p>
+
+  <div class="apps">
+    <a class="app-card" href="/elempujoncito/">
+      <h2>El Empujoncito</h2>
+      <p>Empieza hoy eso que llevas semanas evitando: escribes qué estás evitando y la app te da un movimiento físico de 2 minutos que sí puedes hacer.</p>
+      <span class="ir">Ver El Empujoncito</span>
+    </a>
+  </div>
+  <p class="pronto">Más apps en camino, a su ritmo.</p>
+</main>
+<footer>
+  <a href="mailto:soporte@voyavanzando.com">soporte@voyavanzando.com</a>
+</footer>
+</body>
+</html>
