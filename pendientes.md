@@ -3,11 +3,7 @@
 Al abrir una nueva sesión: presentar estas opciones numeradas para elegir con cuál seguir.
 Lo principal ahora vive en **Amigo** (repo `Fabian-Zorrilla/asistente`); ver también su `pendientes.md`.
 
-## 1. Publicar Decile dentro de Amigo (lo primero)
-Unir la rama `ccr-a4b94d12-9pm9w8` del repo `asistente` a `main`. Render lo publica solo.
-Necesita el OK del dueño.
-
-## 2. Probarlo en el teléfono (Android) y ajustar
+## 1. Probarlo en el teléfono (Android) y ajustar (ya está publicado en Amigo)
 - Abrir Amigo → menú lateral → «🎙️ Manejar el teléfono con la voz» → Contactos → «Traer del teléfono».
   Poner apodos (mamá, etc.).
 - Probar en el chat y en `/voz`: el WhatsApp del ejemplo, una llamada, «llevame a casa»,

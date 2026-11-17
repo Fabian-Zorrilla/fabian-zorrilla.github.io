@@ -58,8 +58,8 @@ mapas, música, YouTube, calendario, abrir apps, buscar). Vos confirmás con un 
 
 ## Estado actual
 
-- **Decile se mudó a Amigo** (repo privado `Fabian-Zorrilla/asistente`, rama `ccr-a4b94d12-9pm9w8`):
-  ahí está la versión que se va a usar, en el chat y en la página `/voz`. Ver el `CLAUDE.md` de ese repo.
+- **Decile se mudó a Amigo** (repo privado `Fabian-Zorrilla/asistente`) y **está publicado** (en `master`
+  desde el 2026-11-17): en el chat y en la página `/voz`. Ver el `CLAUDE.md` de ese repo.
 - Esta versión suelta (`decile/`) queda como respaldo, en la rama `ccr-a4b94d12-9pm9w8` de este repo,
   **sin publicar** (`voyavanzando.com/decile/` da 404). Si algún día se quiere ofrecer a todos desde la
   marca, está lista: unir la rama a `main`.

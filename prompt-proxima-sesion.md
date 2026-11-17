@@ -21,7 +21,7 @@ y `node static/decile/tests/e2e-amigo.mjs`), después commit y push, por pasos c
 contra las bases reales (usar siempre `AMIGO_DB_PATH`). Al cerrar, actualizá `CLAUDE.md`, `pendientes.md`
 y `decisiones.md`.
 
-Estado al cerrar la sesión anterior (2026-11-17): Decile terminado y probado dentro de Amigo, en la rama
-`ccr-a4b94d12-9pm9w8`; falta publicarlo (unir a `main`) y probarlo en mi Android.
+Estado al cerrar la sesión anterior (2026-11-17): Decile terminado, probado y **publicado** dentro de Amigo
+(`master`); falta probarlo en mi Android y ajustar lo que no abra bien.
 
 ---
