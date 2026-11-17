@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Decile · asistente de voz</title>
+<meta name="description" content="Hablale y te deja listas tus apps: WhatsApp, llamadas, mapas, música, calendario y más.">
+<meta name="theme-color" content="#FFE6D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1716" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="iconos/icono.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Decile">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></symbol>
+    <symbol id="i-gente" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2a5 5 0 0 1 5 4.8"/></symbol>
+    <symbol id="i-ajustes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-ayuda" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.9.7c0 1.7-2.5 2.2-2.5 3.8"/><path d="M12 17.2h.01"/></symbol>
+    <symbol id="i-parlante" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+    <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></symbol>
+    <symbol id="i-enviar" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-volver" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+  </defs>
+</svg>
+
+<header class="barra">
+  <a class="marca" href="#/" aria-label="Decile, inicio">Decile</a>
+  <nav class="barra-acciones" aria-label="Menú">
+    <button id="btn-voz" class="icono-btn" type="button" aria-pressed="true" aria-label="Respuestas en voz alta">
+      <svg class="icono"><use href="#i-parlante"/></svg>
+    </button>
+    <a class="icono-btn" href="#/contactos" aria-label="Contactos"><svg class="icono"><use href="#i-gente"/></svg></a>
+    <a class="icono-btn" href="#/ajustes" aria-label="Ajustes"><svg class="icono"><use href="#i-ajustes"/></svg></a>
+    <a class="icono-btn" href="#/ayuda" aria-label="Ayuda"><svg class="icono"><use href="#i-ayuda"/></svg></a>
+  </nav>
+</header>
+
+<main>
+  <!-- ===================== Inicio ===================== -->
+  <section class="pantalla" data-pantalla="inicio" aria-label="Inicio">
+    <div id="bienvenida" class="bienvenida" hidden>
+      <p><strong>Primer paso:</strong> cargá tus contactos para que pueda escribirles y llamarlos.</p>
+      <a class="boton chico" href="#/contactos">Cargar contactos</a>
+    </div>
+
+    <div class="escucha">
+      <p id="estado" class="estado" aria-live="polite">Tocá el micrófono y decime qué hago</p>
+      <button id="mic" class="mic" type="button" aria-label="Hablar" aria-pressed="false">
+        <span class="mic-onda" aria-hidden="true"></span>
+        <svg class="icono"><use href="#i-mic"/></svg>
+      </button>
+      <p id="transcripcion" class="transcripcion" aria-live="polite"></p>
+    </div>
+
+    <form id="form-texto" class="form-texto" autocomplete="off">
+      <label for="entrada" class="oculto">Escribí tu pedido</label>
+      <input id="entrada" type="text" placeholder="…o escribilo acá" enterkeyhint="go" autocapitalize="sentences">
+      <button type="submit" class="enviar" aria-label="Hacerlo"><svg class="icono"><use href="#i-enviar"/></svg></button>
+    </form>
+
+    <article id="tarjeta" class="tarjeta" hidden aria-live="polite"></article>
+
+    <section id="ejemplos" class="bloque">
+      <h2>Probá decir</h2>
+      <div class="chips">
+        <button type="button" class="chip">Mandale un WhatsApp a Juan que diga hola</button>
+        <button type="button" class="chip">Llamá a mamá</button>
+        <button type="button" class="chip">Llevame a casa</button>
+        <button type="button" class="chip">Poné música de Soda Stereo</button>
+        <button type="button" class="chip">Recordame llamar al dentista mañana a las 10</button>
+        <button type="button" class="chip">¿Cómo está el clima?</button>
+        <button type="button" class="chip">Abrí Instagram</button>
+        <button type="button" class="chip">¿Dónde hay una farmacia?</button>
+      </div>
+    </section>
+
+    <section id="historial" class="bloque" hidden>
+      <div class="bloque-cabeza">
+        <h2>Últimos pedidos</h2>
+        <button id="btn-limpiar-historial" type="button" class="enlace-chico">Borrar</button>
+      </div>
+      <ul id="lista-historial" class="lista-historial"></ul>
+    </section>
+
+    <div id="instalar" class="instalar" hidden>
+      <p id="instalar-texto">Instalá Decile en tu pantalla de inicio para abrirlo con un toque.</p>
+      <div class="instalar-botones">
+        <button id="btn-instalar" type="button" class="boton chico">Instalar</button>
+        <button id="btn-instalar-no" type="button" class="enlace-chico">Ahora no</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Contactos ===================== -->
+  <section class="pantalla" data-pantalla="contactos" aria-labelledby="t-contactos" hidden>
+    <div class="cabecera-pantalla">
+      <a href="#/" class="icono-btn" aria-label="Volver"><svg class="icono"><use href="#i-volver"/></svg></a>
+      <h1 id="t-contactos" tabindex="-1">Contactos</h1>
+    </div>
+    <p class="texto-suave">Decile solo puede escribirle o llamar a quien esté acá. Se guardan <strong>solo en este teléfono</strong>.</p>
+    <div class="botonera">
+      <button id="btn-importar-telefono" type="button" class="boton" hidden>📲 Traer del teléfono</button>
+      <label class="boton" for="archivo-vcf">📄 Importar archivo .vcf</label>
+      <input id="archivo-vcf" type="file" accept=".vcf,text/vcard,text/x-vcard,text/directory" class="oculto">
+      <button id="btn-nuevo-contacto" type="button" class="boton">➕ Agregar a mano</button>
+    </div>
+    <details class="detalle-ayuda">
+      <summary>¿Cómo paso mis contactos?</summary>
+      <ul>
+        <li><strong>Android (Chrome):</strong> tocá «Traer del teléfono» y elegí los contactos que quieras.</li>
+        <li><strong>iPhone:</strong> abrí Contactos → «Listas» (arriba a la izquierda) → mantené apretado «Todos los contactos» → Exportar → Guardar en Archivos. Después tocá «Importar archivo .vcf» y elegilo.</li>
+        <li><strong>Desde Google:</strong> en contacts.google.com → Exportar → vCard. Pasá el archivo al teléfono e importalo.</li>
+        <li><strong>Apodos:</strong> tocá un contacto y agregale apodos («mamá», «el gordo») para llamarlo como vos lo llamás.</li>
+      </ul>
+    </details>
+    <label for="buscar-contacto" class="oculto">Buscar contacto</label>
+    <input id="buscar-contacto" class="buscador" type="search" placeholder="Buscar…">
+    <p id="cuenta-contactos" class="texto-suave"></p>
+    <ul id="lista-contactos" class="lista-contactos"></ul>
+  </section>
+
+  <!-- ===================== Ajustes ===================== -->
+  <section class="pantalla" data-pantalla="ajustes" aria-labelledby="t-ajustes" hidden>
+    <div class="cabecera-pantalla">
+      <a href="#/" class="icono-btn" aria-label="Volver"><svg class="icono"><use href="#i-volver"/></svg></a>
+      <h1 id="t-ajustes" tabindex="-1">Ajustes</h1>
+    </div>
+    <form id="form-ajustes" class="formulario">
+      <fieldset>
+        <legend>Voz</legend>
+        <label>Idioma del dictado
+          <select name="idioma">
+            <option value="es-AR">Español (Argentina)</option>
+            <option value="es-UY">Español (Uruguay)</option>
+            <option value="es-CL">Español (Chile)</option>
+            <option value="es-PY">Español (Paraguay)</option>
+            <option value="es-BO">Español (Bolivia)</option>
+            <option value="es-PE">Español (Perú)</option>
+            <option value="es-CO">Español (Colombia)</option>
+            <option value="es-VE">Español (Venezuela)</option>
+            <option value="es-MX">Español (México)</option>
+            <option value="es-US">Español (Estados Unidos)</option>
+            <option value="es-ES">Español (España)</option>
+          </select>
+        </label>
+        <label class="interruptor"><input type="checkbox" name="hablar"> Responder en voz alta</label>
+        <label class="interruptor"><input type="checkbox" name="escucharAlAbrir"> Empezar a escuchar apenas abro la app</label>
+      </fieldset>
+      <fieldset>
+        <legend>Números de teléfono</legend>
+        <label>País
+          <select name="codigoPais">
+            <option value="54">Argentina (+54)</option>
+            <option value="598">Uruguay (+598)</option>
+            <option value="56">Chile (+56)</option>
+            <option value="595">Paraguay (+595)</option>
+            <option value="591">Bolivia (+591)</option>
+            <option value="51">Perú (+51)</option>
+            <option value="57">Colombia (+57)</option>
+            <option value="58">Venezuela (+58)</option>
+            <option value="52">México (+52)</option>
+            <option value="34">España (+34)</option>
+            <option value="1">Estados Unidos (+1)</option>
+          </select>
+        </label>
+        <label>Tu código de área (opcional)
+          <input name="codigoArea" inputmode="numeric" placeholder="Ej: 11, 351 o 294" maxlength="5">
+        </label>
+        <p class="texto-suave">Se usa para los números guardados sin código de área.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Apps preferidas</legend>
+        <label>Cuando digo «mensaje», usar
+          <select name="canalMensaje"><option value="whatsapp">WhatsApp</option><option value="sms">SMS</option></select>
+        </label>
+        <label>Mapas
+          <select name="appMapas"><option value="google">Google Maps</option><option value="waze">Waze</option><option value="apple">Apple Maps</option></select>
+        </label>
+        <label>Música
+          <select name="appMusica"><option value="spotify">Spotify</option><option value="youtubemusic">YouTube Music</option><option value="youtube">YouTube</option><option value="deezer">Deezer</option><option value="applemusic">Apple Music</option></select>
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Lugares</legend>
+        <label>Casa <input name="casa" placeholder="Calle 123, Ciudad" autocomplete="street-address"></label>
+        <label>Trabajo <input name="trabajo" placeholder="Calle 456, Ciudad"></label>
+        <p class="texto-suave">Para decir «llevame a casa» o «¿cómo llego al trabajo?».</p>
+      </fieldset>
+    </form>
+
+    <section class="bloque">
+      <h2>Mis comandos</h2>
+      <p class="texto-suave">Para abrir cualquier app o atajo con una frase tuya. Si el enlace tiene <code>{texto}</code>, se reemplaza por lo que digas después de la frase.</p>
+      <ul id="lista-comandos" class="lista-comandos"></ul>
+      <form id="form-comando" class="formulario compacto">
+        <input type="hidden" name="cid">
+        <label>Nombre <input name="nombre" placeholder="Ej: Modo foco" required maxlength="40"></label>
+        <label>Frases (separadas por coma) <input name="frases" placeholder="Ej: modo foco, concentrarme" required></label>
+        <label>Enlace <input name="url" placeholder="Ej: shortcuts://run-shortcut?name=Foco" required></label>
+        <div class="botonera">
+          <button type="submit" class="boton">Guardar comando</button>
+          <button type="reset" class="enlace-chico">Limpiar</button>
+        </div>
+      </form>
+      <details class="detalle-ayuda">
+        <summary>Ideas de comandos</summary>
+        <ul>
+          <li><strong>iPhone (Atajos):</strong> <code>shortcuts://run-shortcut?name=NombreDelAtajo</code> — sirve para alarmas, linterna, modos, etc.</li>
+          <li><strong>Una página:</strong> <code>https://www.google.com/search?q={texto}</code></li>
+          <li><strong>Amigo u otra app web:</strong> pegá su dirección (https://…).</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="bloque">
+      <h2>Tus datos</h2>
+      <div class="botonera">
+        <button id="btn-exportar" type="button" class="boton">⬇️ Bajar copia</button>
+        <label class="boton" for="archivo-copia">⬆️ Cargar copia</label>
+        <input id="archivo-copia" type="file" accept="application/json,.json" class="oculto">
+        <button id="btn-borrar-todo" type="button" class="boton peligro">Borrar todo</button>
+      </div>
+      <p class="texto-suave">La copia sirve para pasar tus contactos y ajustes a otro teléfono.</p>
+    </section>
+  </section>
+
+  <!-- ===================== Ayuda ===================== -->
+  <section class="pantalla ayuda" data-pantalla="ayuda" aria-labelledby="t-ayuda" hidden>
+    <div class="cabecera-pantalla">
+      <a href="#/" class="icono-btn" aria-label="Volver"><svg class="icono"><use href="#i-volver"/></svg></a>
+      <h1 id="t-ayuda" tabindex="-1">Cómo se usa</h1>
+    </div>
+    <ol class="pasos">
+      <li>Tocá el micrófono y decí lo que necesitás.</li>
+      <li>Mirá la tarjeta: ahí ves lo que entendí y podés corregir el mensaje.</li>
+      <li>Tocá el botón: se abre la app con todo listo. Vos solo tocás <em>enviar</em>.</li>
+    </ol>
+
+    <h2>Qué le podés pedir</h2>
+    <dl class="ejemplos-ayuda">
+      <dt>💬 Mensajes</dt>
+      <dd>«Mandale un WhatsApp a Juan Gómez que diga hola amigo» · «Decile a mamá que llego en 10» · «Mandale un SMS a Pedro: ya salgo» · «Mandale un mail a Laura con asunto reunión diciendo que confirmo» · «Mandale mi ubicación a mamá»</dd>
+      <dt>📞 Llamadas</dt>
+      <dd>«Llamá a Juan» · «Llamá al 11 2345 6789» · «Llamá a mamá por WhatsApp»</dd>
+      <dt>🧭 Mapas</dt>
+      <dd>«Llevame a casa» · «¿Cómo llego al Obelisco?» · «Llevame al trabajo con Waze» · «¿Dónde hay una farmacia?»</dd>
+      <dt>🎵 Música y videos</dt>
+      <dd>«Poné música de Soda Stereo» · «Reproducí Cerati en Spotify» · «Buscá recetas de pizza en YouTube»</dd>
+      <dt>📅 Agenda</dt>
+      <dd>«Recordame llamar al dentista mañana a las 10» · «Agendá reunión con Pedro el viernes a las 15»</dd>
+      <dt>📱 Apps</dt>
+      <dd>«Abrí Instagram» · «Abrí Mercado Pago» · «Abrí el chat de Juan»</dd>
+      <dt>🔎 Preguntas</dt>
+      <dd>«¿Qué hora es?» · «¿Qué día es hoy?» · «¿Va a llover mañana?» · «¿Quién ganó el partido?» (lo busca en Google)</dd>
+      <dt>👤 Contactos</dt>
+      <dd>«Agregá el contacto Juan Gómez con el número 11 2345 6789»</dd>
+    </dl>
+
+    <h2>Consejos</h2>
+    <ul class="lista-ayuda">
+      <li>Cargá tus contactos y poneles <strong>apodos</strong> («mamá», «el gordo»).</li>
+      <li>Si el micrófono no anda, escribí el pedido o usá el micrófono del teclado.</li>
+      <li><strong>Instalala:</strong> en Android, menú ⋮ → «Instalar app». En iPhone, botón Compartir → «Agregar a inicio».</li>
+      <li>Mantené apretado el ícono de Decile para ir directo a «Hablar ahora».</li>
+    </ul>
+
+    <h2>Lo que no puede hacer (y por qué)</h2>
+    <ul class="lista-ayuda">
+      <li><strong>No aprieta «Enviar» por vos.</strong> El teléfono no deja que una página toque botones de otras apps. Por eso te deja todo listo y vos confirmás.</li>
+      <li><strong>No cambia ajustes del teléfono</strong> (linterna, volumen, wifi, alarmas). Para alarmas te ofrece un recordatorio en el calendario.</li>
+      <li><strong>No lee tus mensajes.</strong></li>
+    </ul>
+
+    <h2>Privacidad</h2>
+    <ul class="lista-ayuda">
+      <li>Tus contactos y ajustes quedan <strong>solo en este teléfono</strong>. Decile no tiene servidor.</li>
+      <li>El dictado lo hace tu navegador (Google en Android, Apple en iPhone).</li>
+      <li>El clima usa Open-Meteo con tu ubicación aproximada, solo cuando lo pedís.</li>
+    </ul>
+    <p class="texto-suave pie">Decile es parte de <a href="/">Voy Avanzando</a>.</p>
+  </section>
+</main>
+
+<dialog id="dialogo-contacto" class="dialogo">
+  <form method="dialog" id="form-contacto" class="formulario">
+    <h2 id="titulo-dialogo-contacto">Nuevo contacto</h2>
+    <input type="hidden" name="cid">
+    <label>Nombre <input name="nombre" required maxlength="80" autocomplete="off"></label>
+    <label>Teléfono <input name="telefono" type="tel" inputmode="tel" placeholder="Ej: 11 2345-6789" autocomplete="off"></label>
+    <p id="vista-whatsapp" class="texto-suave"></p>
+    <label>Mail <input name="email" type="email" inputmode="email" autocomplete="off"></label>
+    <label>Apodos (separados por coma) <input name="alias" placeholder="Ej: mamá, la vieja" autocomplete="off"></label>
+    <div class="botonera-dialogo">
+      <button value="borrar" id="btn-borrar-contacto" class="boton peligro" formnovalidate>Borrar</button>
+      <span class="espacio"></span>
+      <button value="cancelar" class="boton" formnovalidate>Cancelar</button>
+      <button value="guardar" class="boton principal">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dialogo-confirmar" class="dialogo">
+  <form method="dialog" class="formulario">
+    <p id="texto-confirmar"></p>
+    <div class="botonera-dialogo">
+      <span class="espacio"></span>
+      <button value="no" class="boton">Cancelar</button>
+      <button value="si" class="boton peligro">Sí, seguir</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="aviso" class="aviso" role="status" aria-live="polite" hidden></div>
+<noscript><p class="noscript">Decile necesita JavaScript activado.</p></noscript>
+</body>
+</html>
