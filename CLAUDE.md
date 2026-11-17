@@ -98,3 +98,5 @@ mapas, música, YouTube, calendario, abrir apps, buscar). Vos confirmás con un 
     resuelve los pedidos del teléfono antes de ir a la IA, y `/voz` tiene la pantalla de Decile.
   - Último cambio del día: si el pedido está claro, se abre la app directo con todo cargado
     (solo falta tocar «Enviar»). En las dos copias (Amigo y suelta). `sw.js` → `decile-v2`.
+  - Cierre: Decile publicado en Amigo (`master`). Para retomar en la compu: `prompt-proxima-sesion.md`
+    (está igual en este repo y en el de Amigo).
