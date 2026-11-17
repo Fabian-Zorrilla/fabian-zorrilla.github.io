@@ -46,3 +46,16 @@ Cada decisión con su fecha y el motivo, en simple.
 - **No se enlaza desde la portada** por ahora (uso personal).
 - **Pruebas automáticas sin instalar nada**: `node --test` para la lógica y el
   Chromium que ya trae el entorno para la pantalla (con micrófono simulado).
+
+## 2026-11-17 (tarde) — Decile se muda a Amigo
+
+- **Decile vive dentro de Amigo** (pedido del dueño). Una sola app en el teléfono, y Amigo ya resuelve
+  de verdad agenda, recordatorios y tareas; Decile suma la parte del teléfono.
+- **El chat de Amigo le pregunta primero a Decile**: si el mensaje es un pedido del teléfono (WhatsApp,
+  llamar, mapas, música, abrir apps) lo resuelve sin IA (instantáneo y gratis); si tiene fecha o es de
+  Amigo (agenda, tareas, clientes, preguntas), va a la IA. Siempre hay «No era esto: preguntale a Amigo».
+- **La pantalla grande de Decile queda en `/voz`** dentro de Amigo, con la paleta de Amigo.
+- **La versión suelta queda sin publicar**, como respaldo; misma lógica.
+- **Límite que no cambia**: ni Decile ni Amigo pueden apretar «Enviar» dentro de otra app ni cambiar
+  ajustes del teléfono; para eso está el asistente del propio teléfono (Gemini / «Ok Google»).
+

@@ -1,38 +1,29 @@
 # Pendientes — acciones a seguir
 
 Al abrir una nueva sesión: presentar estas opciones numeradas para elegir con cuál seguir.
+Lo principal ahora vive en **Amigo** (repo `Fabian-Zorrilla/asistente`); ver también su `pendientes.md`.
 
-## 1. Publicar Decile (lo primero)
-Unir la rama `ccr-a4b94d12-9pm9w8` a `main` (PR + merge). GitHub Pages la publica
-sola en **https://voyavanzando.com/decile/**. Necesita el OK del dueño.
+## 1. Publicar Decile dentro de Amigo (lo primero)
+Unir la rama `ccr-a4b94d12-9pm9w8` del repo `asistente` a `main`. Render lo publica solo.
+Necesita el OK del dueño.
 
-## 2. Probarla en el teléfono (Android) y ajustar
-- Abrir la dirección en Chrome → «Instalar app» → dar permiso al micrófono.
-- Cargar contactos («Traer del teléfono») y poner apodos (mamá, etc.).
-- Probar: el ejemplo del WhatsApp, una llamada, «llevame a casa», «poné música de…»,
-  «recordame… mañana a las 10», «¿cómo está el clima?».
-- Anotar qué botón no abre bien la app. Si el enlace alternativo («¿No se abrió?»)
-  anda mejor, cambiar cuál es el principal en `js/acciones.js`.
-- Revisar en el teléfono: archivo de calendario (.ics), Waze, Spotify y los enlaces
-  `intent://` de Android.
+## 2. Probarlo en el teléfono (Android) y ajustar
+- Abrir Amigo → menú lateral → «🎙️ Manejar el teléfono con la voz» → Contactos → «Traer del teléfono».
+  Poner apodos (mamá, etc.).
+- Probar en el chat y en `/voz`: el WhatsApp del ejemplo, una llamada, «llevame a casa»,
+  «poné música de…», «abrí Instagram».
+- Anotar qué botón no abre bien su app. Si el enlace alternativo («¿No se abrió?») anda mejor,
+  cambiar cuál es el principal en `static/decile/js/acciones.js` (Amigo) y en `decile/js/acciones.js` (acá).
 
-## 3. Modo IA opcional (Claude) para frases libres
-Para que entienda cualquier forma de pedir. Opciones: (a) clave propia guardada en el
-teléfono, o (b) un pequeño servicio con la clave del lado del servidor (podría vivir
-en Amigo/Render). La IA solo propondría la tarjeta: siempre se confirma con un toque.
-Modelo por defecto: `claude-opus-5-5` (ver skill claude-api antes de programarlo).
+## 3. Que la IA de Amigo entienda pedidos del teléfono dichos de cualquier forma
+Una herramienta en `ai.py` que devuelva la misma tarjeta (la arma el teléfono con `acciones.js`).
+Y «mandale un WhatsApp a [cliente]» buscando el teléfono en el CRM (embudo).
 
-## 4. Conectar con Amigo
-Por ejemplo: un comando «anotá en Amigo…» que abra Amigo con el texto, o un botón en
-Amigo que abra Decile. Ver qué conviene en el repo `asistente`.
+## 4. Arreglar la barra de arriba del chat de Amigo en el celular
+Hoy no entra (📚 y ＋ quedan cortados y la página se ensancha). Es anterior a Decile.
 
-## 5. Decidir si Decile aparece en la portada de voyavanzando.com
-Hoy no está enlazada (es de uso personal). Si se publica para todos, agregar la
-tarjeta en `index.html` de la raíz.
+## 5. Versión suelta de Decile (este repo)
+Decidir si se publica en voyavanzando.com/decile para todos (y si aparece en la portada) o se archiva.
 
 ## 6. Más acciones a pedido
-Ideas: pedir Uber/Cabify con destino, más apps argentinas, lista de compras/notas
-dentro de Decile, leer en voz alta la respuesta del clima siempre, etc.
-
-## 7. iPhone (si se usa)
-Guía para crear Atajos (alarma, linterna, modos) y llamarlos desde «Mis comandos».
+Pedir Uber/Cabify con destino, más apps argentinas, notas/lista de compras, etc.

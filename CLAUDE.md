@@ -58,12 +58,13 @@ mapas, música, YouTube, calendario, abrir apps, buscar). Vos confirmás con un 
 
 ## Estado actual
 
-- Decile v1 terminada y probada, en la rama `ccr-a4b94d12-9pm9w8`.
-- **Todavía NO está publicada**: falta unir la rama a `main` (PR + merge). Hasta
-  entonces `voyavanzando.com/decile/` da error 404.
-- No está enlazada desde la portada (decisión pendiente).
-- Proyecto relacionado: **Amigo** (repo privado `Fabian-Zorrilla/asistente`, Flask +
-  Claude en Render). Decile NO lo toca; de ahí salieron las lecciones de dictado.
+- **Decile se mudó a Amigo** (repo privado `Fabian-Zorrilla/asistente`, rama `ccr-a4b94d12-9pm9w8`):
+  ahí está la versión que se va a usar, en el chat y en la página `/voz`. Ver el `CLAUDE.md` de ese repo.
+- Esta versión suelta (`decile/`) queda como respaldo, en la rama `ccr-a4b94d12-9pm9w8` de este repo,
+  **sin publicar** (`voyavanzando.com/decile/` da 404). Si algún día se quiere ofrecer a todos desde la
+  marca, está lista: unir la rama a `main`.
+- La lógica es la misma en los dos lados (`js/parser.js`, `js/acciones.js`, etc.). Si se mejora en Amigo,
+  copiar los módulos acá antes de publicar esta versión.
 
 ## Trampas conocidas (no re-descubrir)
 
@@ -93,3 +94,5 @@ mapas, música, YouTube, calendario, abrir apps, buscar). Vos confirmás con un 
   - Pruebas: 32 de lógica (`npm test`) + 17 pasos en Chromium con micrófono simulado
     (`node tests/e2e.mjs`).
   - Commits: notas → lógica + pruebas → pantalla + PWA → notas finales.
+  - Después, a pedido del dueño («colocarlo dentro de la app de Amigo»), se metió en Amigo: el chat
+    resuelve los pedidos del teléfono antes de ir a la IA, y `/voz` tiene la pantalla de Decile.
