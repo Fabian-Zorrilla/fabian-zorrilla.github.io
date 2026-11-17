@@ -27,3 +27,22 @@ Cada decisión con su fecha y el motivo, en simple.
   y se puede escribir en lugar de hablar.
 - **Idioma por defecto español de Argentina (`es-AR`) y código de país 54**,
   configurables en Ajustes.
+- **Cómo se abre cada app**: en iPhone, WhatsApp con `whatsapp://` (más directo); en
+  Android y PC con `wa.me` (el enlace oficial). Siempre hay un enlace alternativo
+  («¿No se abrió? Probá de esta otra forma»); en Android, `intent://` que abre justo
+  esa app o la web si no está instalada.
+- **WhatsApp usa el número internacional** (Argentina: 54 9 + área + número, sin 0 ni
+  15). **Llamadas y SMS usan el número tal como está guardado**, porque así marca igual
+  que el teléfono (y no se rompen los fijos).
+- **Alarmas y temporizadores**: una web no puede ponerlos; Decile ofrece un recordatorio
+  en el calendario. «Despertador a las 6» se toma como 6 de la mañana; en el resto,
+  «a las 5» se toma como 17:00 (lo más común al agendar).
+- **Calendario**: Google Calendar (enlace con el evento cargado) y, además, archivo
+  `.ics` para el calendario del teléfono (en iPhone se abre, en Android se descarga).
+- **Clima con Open-Meteo**: gratis y sin claves; ubicación redondeada (~1 km) y solo
+  cuando se pide.
+- **Contactos repetidos** al importar: se juntan por nombre; los teléfonos se comparan
+  por los últimos 8 dígitos.
+- **No se enlaza desde la portada** por ahora (uso personal).
+- **Pruebas automáticas sin instalar nada**: `node --test` para la lógica y el
+  Chromium que ya trae el entorno para la pantalla (con micrófono simulado).

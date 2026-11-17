@@ -56,6 +56,40 @@ mapas, música, YouTube, calendario, abrir apps, buscar). Vos confirmás con un 
 - Al cerrar sesión: actualizar esos 3 archivos y dejar el prompt de arranque en
   `prompt-proxima-sesion.md`.
 
+## Estado actual
+
+- Decile v1 terminada y probada, en la rama `ccr-a4b94d12-9pm9w8`.
+- **Todavía NO está publicada**: falta unir la rama a `main` (PR + merge). Hasta
+  entonces `voyavanzando.com/decile/` da error 404.
+- No está enlazada desde la portada (decisión pendiente).
+- Proyecto relacionado: **Amigo** (repo privado `Fabian-Zorrilla/asistente`, Flask +
+  Claude en Render). Decile NO lo toca; de ahí salieron las lecciones de dictado.
+
+## Trampas conocidas (no re-descubrir)
+
+- En formularios, `form.id` devuelve el id del propio formulario: los campos ocultos
+  se llaman `cid` y se leen con `form.elements.cid`.
+- Listas con `display: grid` y textos largos: usar `grid-template-columns: minmax(0, 1fr)`
+  o se ensancha la página (scroll horizontal en el teléfono).
+- Las capturas de Playwright salen "apagadas" si se toman durante la animación de la
+  tarjeta: esperar ~350 ms.
+- Desde este entorno de Claude la API del clima (open-meteo.com) está bloqueada por la
+  red: se prueba con respuestas simuladas (`tests/clima.test.js`). En el teléfono anda.
+- Llamadas y SMS usan el número **tal como está guardado** (marca igual que el
+  teléfono); WhatsApp usa el formato internacional (54 9 + área + número).
+
 ## Historial
 
-- **2026-11-17** — Arranque del proyecto Decile (ver detalle al cerrar la sesión).
+- **2026-11-17** — Se creó Decile v1 desde cero:
+  - Parser en castellano (voseo y tuteo, con o sin tildes, puntuación del dictado):
+    mensajes (WhatsApp/SMS/mail/Telegram, ubicación, audios), llamadas, agenda y
+    recordatorios, mapas y navegación (casa/trabajo, Waze, modos), música, YouTube,
+    abrir ~35 apps, búsquedas y preguntas, hora/fecha/clima, contactos, comandos propios,
+    y respuestas honestas para lo que una web no puede (alarmas → recordatorio).
+  - Contactos: búsqueda aproximada (errores del dictado), apodos, importar desde el
+    teléfono (Android) o `.vcf`, elegir cuando hay varios, agregar al vuelo.
+  - Pantalla: micrófono + texto, tarjeta editable, historial, ajustes, ayuda, modo
+    oscuro, PWA instalable que anda sin internet.
+  - Pruebas: 32 de lógica (`npm test`) + 17 pasos en Chromium con micrófono simulado
+    (`node tests/e2e.mjs`).
+  - Commits: notas → lógica + pruebas → pantalla + PWA → notas finales.
