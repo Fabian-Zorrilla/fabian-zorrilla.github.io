@@ -1,0 +1,10 @@
+{
+  "name": "decile",
+  "private": true,
+  "description": "Decile: asistente de voz para manejar las apps del teléfono.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "e2e": "node tests/e2e.mjs"
+  }
+}
