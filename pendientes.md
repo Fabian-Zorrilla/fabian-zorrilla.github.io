@@ -19,6 +19,12 @@ Necesita el OK del dueño.
 Una herramienta en `ai.py` que devuelva la misma tarjeta (la arma el teléfono con `acciones.js`).
 Y «mandale un WhatsApp a [cliente]» buscando el teléfono en el CRM (embudo).
 
+## 3b. Manos libres de verdad («que lo mande solo»)
+Una web no puede tener permisos del sistema. Opciones (detalle en el `pendientes.md` de Amigo):
+(1) Gemini / «Ok Google» — ya lo hace, sin programar; (2) MacroDroid como «manos» de Amigo (webhook +
+toque automático en Enviar, con cuenta regresiva para cancelar); (3) app Android propia — no por ahora.
+Esperando que el dueño elija.
+
 ## 4. Arreglar la barra de arriba del chat de Amigo en el celular
 Hoy no entra (📚 y ＋ quedan cortados y la página se ensancha). Es anterior a Decile.
 
