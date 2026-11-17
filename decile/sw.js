@@ -2,7 +2,7 @@
 // IMPORTANTE: cada vez que cambie un archivo de Decile, subir VERSION.
 // Así el teléfono baja la versión nueva (si no, sigue usando la guardada).
 
-const VERSION = 'decile-v1';
+const VERSION = 'decile-v2';
 const ARCHIVOS = [
   './', 'index.html', 'estilos.css', 'manifest.webmanifest',
   'iconos/icono.svg', 'iconos/icono-192.png', 'iconos/icono-512.png', 'iconos/icono-maskable-512.png', 'iconos/apple-touch-icon.png',

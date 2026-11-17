@@ -1,7 +1,7 @@
 // Pruebas de las tarjetas y los enlaces que abren cada app.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { armarTarjeta, crearICS, detectarPlataforma, enlaceAbrirApp } from '../js/acciones.js';
+import { armarTarjeta, crearICS, detectarPlataforma, enlaceAbrirApp, enlaceDirecto } from '../js/acciones.js';
 import { interpretar } from '../js/parser.js';
 import { appPorId } from '../js/apps.js';
 
@@ -102,4 +102,19 @@ test('reconoce el tipo de teléfono', () => {
   assert.equal(detectarPlataforma('Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)'), 'ios');
   assert.equal(detectarPlataforma('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', 5), 'ios');
   assert.equal(detectarPlataforma('Mozilla/5.0 (Windows NT 10.0; Win64; x64)'), 'otro');
+});
+
+test('cuándo se abre la app directo (pedido claro) y cuándo se muestra la tarjeta', () => {
+  const directo = (frase, c = ctx()) => { const it = interpretar(frase, c); return enlaceDirecto(it, armarTarjeta(it, c)); };
+  assert.equal(directo('Enviale un WhatsApp a Juan Gómez qué diga. Hola amigo.'), 'https://wa.me/5491123456789?text=Hola%20amigo.');
+  assert.equal(directo('llamá a mamá'), 'tel:0294154123456');
+  assert.equal(directo('Abrí Instagram'), 'https://www.instagram.com/');
+  assert.equal(directo('mandale un audio a Juan Gómez'), 'https://wa.me/5491123456789');
+  assert.equal(directo('mandale un whatsapp a Juan que diga hola'), null);        // dos «Juan»: elegir
+  assert.equal(directo('mandale un whatsapp a Roberto que diga hola'), null);     // no está en la agenda
+  assert.equal(directo('envíale un whatsapp a Juan Gómez'), null);                // falta el mensaje
+  assert.equal(directo('mandale mi ubicación a mamá'), null);                     // se está buscando la ubicación
+  assert.equal(directo('llevame a casa'), null);                                  // falta cargar la dirección
+  assert.equal(directo('abrí Fulanito App'), null);                               // app desconocida
+  assert.equal(directo('¿qué hora es?'), null);
 });

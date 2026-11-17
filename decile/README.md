@@ -11,7 +11,8 @@ Dirección (una vez publicada): **https://voyavanzando.com/decile/**
 
 1. Abrí Decile y tocá el micrófono (o escribí el pedido).
 2. Mirá la tarjeta: muestra lo que entendió. Podés corregir el mensaje.
-3. Tocá el botón grande: se abre la app con todo listo.
+3. Si el pedido está claro, se abre la app directo con todo cargado (si no, tocás el botón
+   de la tarjeta). Vos solo das el OK tocando **Enviar**.
 
 La primera vez, cargá tus contactos (botón 👥): desde el teléfono (Android),
 con un archivo `.vcf` (iPhone o Google Contacts) o a mano. Podés ponerles

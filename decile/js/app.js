@@ -1,7 +1,7 @@
 // app.js — La pantalla de Decile: une el micrófono, el parser y las tarjetas.
 
 import { interpretar, elegirMejor } from './parser.js';
-import { armarTarjeta, detectarPlataforma } from './acciones.js';
+import { armarTarjeta, detectarPlataforma, enlaceDirecto } from './acciones.js';
 import { fusionarContactos, crearContacto, ordenarContactos, claveNombre, puntaje, telefonoPrincipal, emailPrincipal } from './contactos.js';
 import { paraWhatsApp, mostrarNumero, numeroDudoso } from './telefono.js';
 import { leerVCard } from './vcard.js';
@@ -160,18 +160,38 @@ function procesar(versiones) {
   if (!estado.escucha) ponerEstado('quieto');
   const mejor = elegirMejor(lista, ctx());
   estado.entendido = mejor.texto;
-  mostrarIntencion(mejor.intencion, { guardar: true });
+  mostrarIntencion(mejor.intencion, { guardar: true, directo: true });
 }
 
-function mostrarIntencion(intencion, { guardar = false, hablarlo = true } = {}) {
+// El navegador deja abrir otra app solo cerca de un toque (unos 5 segundos).
+const hayToqueReciente = () => !!(navigator.userActivation && navigator.userActivation.isActive);
+
+function abrirEnlace(href) {
+  const web = /^https?:/i.test(href);
+  const a = el('a', { href, target: web ? '_blank' : null, rel: web ? 'noopener' : null });
+  document.body.append(a);
+  a.click();
+  a.remove();
+}
+
+function mostrarIntencion(intencion, { guardar = false, hablarlo = true, directo = false } = {}) {
   estado.intencion = intencion;
   const t = armarTarjeta(intencion, ctx());
   if (t.accion && t.accion.tipo === 'pantalla') {
     ir(t.accion.pantalla);
     return;
   }
+  // Pedido claro → se abre la app directo con todo cargado: solo falta tocar «Enviar» ahí.
+  // Si el dictado tardó (ya no hay toque reciente) o hay dudas, queda la tarjeta con su botón.
+  const href = directo && estado.ajustes.abrirDirecto && hayToqueReciente() ? enlaceDirecto(intencion, t) : null;
+  if (href) t.nota = 'Ya abrí la app con todo cargado: tocá Enviar ahí. Si no se abrió, usá el botón.';
   pintarTarjeta(t);
   if (guardar) sumarAlHistorial(intencion, t);
+  if (href) {
+    callar();
+    abrirEnlace(href);
+    return;
+  }
   if (hablarlo) decir(t.decir);
   if (t.pendiente === 'clima') resolverClima(intencion);
   if (t.pendiente === 'ubicacion') resolverUbicacion(intencion);
@@ -346,12 +366,12 @@ function pintarEleccion(elegir) {
 function elegirContacto(id) {
   if (!estado.intencion) return;
   estado.intencion.contactoId = id;
-  mostrarIntencion(estado.intencion);
+  mostrarIntencion(estado.intencion, { directo: true });
 }
 
 function ejecutarAccion(accion) {
   if (accion.tipo === 'pantalla') ir(accion.pantalla);
-  else if (accion.tipo === 'intencion') mostrarIntencion(accion.intencion);
+  else if (accion.tipo === 'intencion') mostrarIntencion(accion.intencion, { directo: true });
   else if (accion.tipo === 'guardarContacto') {
     const r = fusionarContactos(estado.contactos, [accion.contacto]);
     guardarContactos(r.lista);

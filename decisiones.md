@@ -59,3 +59,12 @@ Cada decisión con su fecha y el motivo, en simple.
 - **Límite que no cambia**: ni Decile ni Amigo pueden apretar «Enviar» dentro de otra app ni cambiar
   ajustes del teléfono; para eso está el asistente del propio teléfono (Gemini / «Ok Google»).
 
+## 2026-11-17 (noche) — Pedido claro: se abre la app directo
+
+- **Pedido del dueño**: «yo pido el mensaje, queda cargado en la pantalla y yo le doy el OK: Enviar».
+- **Si el pedido está claro** (un solo contacto, con mensaje, sin avisos), Decile abre la app directo con
+  todo cargado y la persona solo toca «Enviar» ahí. **Con dudas** (dos «Juan», falta el mensaje, número
+  raro) se muestra la tarjeta para revisar. Se puede apagar en Ajustes («abrir la app directo»).
+- **Límite del navegador**: solo deja abrir otra app hasta ~5 segundos después de un toque. En el chat de
+  Amigo siempre se cumple (el toque de ➤). En la pantalla del micrófono grande, si el dictado tarda más,
+  queda la tarjeta con el botón (un toque más). Se decide con `navigator.userActivation.isActive`.

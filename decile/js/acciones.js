@@ -344,6 +344,24 @@ function horaTexto(d) {
 
 const fechaTexto = (d) => `Hoy es ${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`;
 
+const ABRE_DIRECTO = new Set(['whatsapp', 'sms', 'email', 'telegram', 'llamar', 'navegar', 'mapa', 'youtube', 'musica', 'abrir', 'evento', 'personalizado']);
+const MENSAJERIA = new Set(['whatsapp', 'sms', 'email', 'telegram']);
+
+/**
+ * Si el pedido está claro y completo, devuelve el enlace para abrir la app
+ * DIRECTO (con el mensaje ya cargado: la persona solo toca «Enviar» ahí).
+ * Devuelve null si conviene mostrar primero la tarjeta: falta elegir a quién,
+ * falta el mensaje, hay un aviso para revisar o algo todavía se está buscando.
+ */
+export function enlaceDirecto(it, t) {
+  if (!it || !t || !ABRE_DIRECTO.has(it.tipo) || t.elegir || t.pendiente) return null;
+  if ((t.avisos || []).length && !it.audio) return null;
+  if (it.tipo === 'abrir' && !it.appId) return null;
+  if (MENSAJERIA.has(it.tipo) && !it.audio && !String(it.mensaje || '').trim()) return null;
+  const b = (t.botones || []).find((x) => x.principal && x.href);
+  return b ? b.href : null;
+}
+
 /**
  * Arma la tarjeta para una intención.
  * @param {object} it intención (de interpretar())

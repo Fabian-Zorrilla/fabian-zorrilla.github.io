@@ -35,6 +35,7 @@ export const AJUSTES_BASE = {
   appMapas: 'google',
   appMusica: 'spotify',
   hablar: true,             // responder en voz alta
+  abrirDirecto: true,       // pedido claro → abrir la app con todo cargado (solo falta tocar Enviar)
   escucharAlAbrir: false,
   casa: '',
   trabajo: '',

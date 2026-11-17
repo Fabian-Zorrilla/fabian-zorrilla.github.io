@@ -42,6 +42,7 @@ function microfonoFalso() {
     start() {
       window.__ultimoIdioma = this.lang;
       const texto = window.__dictado || '';
+      const demora = window.__demora || 120;
       setTimeout(() => {
         if (!texto) { this.onerror && this.onerror({ error: 'no-speech' }); this.onend && this.onend(); return; }
         const alt = (t) => ({ transcript: t, confidence: 0.9 });
@@ -52,7 +53,7 @@ function microfonoFalso() {
         final.isFinal = true;
         this.onresult && this.onresult({ resultIndex: 0, results: [final] });
         this.onend && this.onend();
-      }, 120);
+      }, demora);
     }
     stop() {}
     abort() { this.onend && this.onend(); }
@@ -73,12 +74,14 @@ async function main() {
   try {
     const contexto = await navegador.newContext({ ...devices['Pixel 7'], locale: 'es-AR', timezoneId: 'America/Argentina/Buenos_Aires' });
     await contexto.addInitScript(microfonoFalso);
-    // Sin internet de verdad: las tipografías de Google se responden vacías.
+    // Sin internet de verdad: lo de afuera (WhatsApp, Maps…) se anota y se responde vacío.
+    const afuera = [];
+    await contexto.route(/^https?:\/\/(?!localhost|127\.0\.0\.1|fonts\.)/, (r) => { afuera.push(r.request().url()); r.fulfill({ status: 200, contentType: 'text/html', body: '<title>afuera</title>' }); });
     await contexto.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//, (r) => r.fulfill({ status: 200, contentType: 'text/css', body: '' }));
     const p = await contexto.newPage();
     const errores = [];
     p.on('pageerror', (e) => errores.push(`pageerror: ${e.message}`));
-    p.on('console', (m) => { if (m.type() === 'error') errores.push(`console: ${m.text()}`); });
+    p.on('console', (m) => { if (m.type() === 'error' && !/Failed to launch/.test(m.text())) errores.push(`console: ${m.text()}`); });
     const captura = async (nombre) => { if (CAPTURAS) await p.waitForTimeout(350); if (CAPTURAS) await p.screenshot({ path: path.join(CAPTURAS, `${nombre}.png`), fullPage: true }); };
     const pedir = async (texto) => {
       await p.fill('#entrada', texto);
@@ -126,6 +129,9 @@ async function main() {
       igual(await p.inputValue('#campo-mensaje'), 'Hola amigo.');
       igual(await hrefPrincipal(), 'https://wa.me/5491123456789?text=Hola%20amigo.');
       igual(await p.textContent('#tarjeta .boton.principal'), 'Enviar por WhatsApp');
+      await p.waitForFunction(() => true);
+      verdad(afuera.includes('https://wa.me/5491123456789?text=Hola%20amigo.'), `no abrió WhatsApp directo: ${afuera}`);
+      verdad((await p.textContent('#tarjeta .nota')).startsWith('Ya abrí la app con todo cargado'), 'falta el aviso de que ya se abrió');
       await captura('04-tarjeta-whatsapp');
     });
 
@@ -149,13 +155,40 @@ async function main() {
       await p.waitForFunction(() => document.querySelector('#estado').textContent.startsWith('No te escuché'));
     });
 
-    await paso('dos «Juan»: pregunta cuál y usa el elegido', async () => {
+    await paso('dos «Juan»: pregunta cuál (sin abrir nada) y usa el elegido', async () => {
+      const antes = afuera.length;
       await pedir('mandale un whatsapp a Juan que diga hola');
       igual(await p.locator('.contacto-opcion').count(), 2);
+      await p.waitForTimeout(400);
+      igual(afuera.length, antes, 'con dudas no debería abrir WhatsApp');
       await captura('05-elegir-contacto');
       await p.click('.contacto-opcion:has-text("Juan Pérez")');
       igual(await p.textContent('.tarjeta-titulo'), 'WhatsApp para Juan Pérez');
       igual(await hrefPrincipal(), 'https://wa.me/5491144445555?text=Hola');
+    });
+
+    await paso('si el dictado tarda más de 5 s, queda la tarjeta con el botón', async () => {
+      const antes = afuera.length;
+      await p.evaluate(() => { window.__dictado = 'Mandale un WhatsApp a Juan Gómez que diga ya salgo'; window.__demora = 5600; });
+      await p.click('#mic');
+      await p.waitForFunction(() => document.querySelector('.tarjeta-titulo')?.textContent === 'WhatsApp para Juan Gómez' && document.querySelector('#campo-mensaje')?.value === 'Ya salgo', null, { timeout: 15000 });
+      await p.waitForTimeout(400);
+      igual(afuera.length, antes, 'sin un toque reciente el navegador no deja abrir otra app');
+      igual(await p.getAttribute('#tarjeta .boton.principal', 'href'), 'https://wa.me/5491123456789?text=Ya%20salgo');
+      await p.evaluate(() => { window.__demora = 0; });
+    });
+
+    await paso('se puede apagar en Ajustes («abrir la app directo»)', async () => {
+      await p.click('a[href="#/ajustes"]');
+      await p.uncheck('#form-ajustes [name=abrirDirecto]');
+      await p.click('.marca');
+      const antes = afuera.length;
+      await pedir('Enviale un WhatsApp a Juan Gómez qué diga. Hola amigo.');
+      await p.waitForTimeout(400);
+      igual(afuera.length, antes, 'apagado no debería abrir solo');
+      await p.click('a[href="#/ajustes"]');
+      await p.check('#form-ajustes [name=abrirDirecto]');
+      await p.click('.marca');
     });
 
     await paso('contacto desconocido: agregarlo y seguir con el pedido', async () => {
